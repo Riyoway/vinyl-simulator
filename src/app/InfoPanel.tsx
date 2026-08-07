@@ -270,55 +270,60 @@ export function InfoPanel() {
             <Row label="Events">{frame.safetyEvents}</Row>
           </Group>
 
+          {/* 盤とデッキの作り分け。デバッグ用ではなくユーザーが選ぶものなので
+              本番でも出す。DEV限定は下の Dev だけ。 */}
+          <Group title="Presets">
+            <Preset
+              label="Cut"
+              value={cutting}
+              options={CUTTING_PRESETS}
+              onPick={(next) => {
+                setCutting(next);
+                setDeckCutting(next);
+              }}
+            />
+            <Preset
+              label="Press"
+              value={made}
+              options={MANUFACTURING_PRESETS}
+              onPick={(next) => {
+                setMade(next);
+                setDeckManufacturing(next);
+              }}
+            />
+            <Preset
+              label="Wear"
+              value={wear}
+              options={WEAR_PRESETS}
+              onPick={(next) => {
+                setWear(next);
+                setDeckWear(next);
+              }}
+              onReset={resetDeckWear}
+            />
+            <Preset
+              label="Levels"
+              value={levels}
+              options={LEVEL_PRESETS}
+              onPick={(next) => {
+                setLevels(next);
+                setDeckLevels(next);
+              }}
+              onReset={resetDeckLevelMeters}
+            />
+            <Preset
+              label="Condition"
+              value={condition}
+              options={RECORD_CONDITIONS}
+              onPick={(next) => {
+                setCondition(next);
+                setDeckCondition(next);
+              }}
+            />
+          </Group>
+
           {DEV && (
             <Group title="Dev">
-              <Preset
-                label="Cut"
-                value={cutting}
-                options={CUTTING_PRESETS}
-                onPick={(next) => {
-                  setCutting(next);
-                  setDeckCutting(next);
-                }}
-              />
-              <Preset
-                label="Press"
-                value={made}
-                options={MANUFACTURING_PRESETS}
-                onPick={(next) => {
-                  setMade(next);
-                  setDeckManufacturing(next);
-                }}
-              />
-              <Preset
-                label="Wear"
-                value={wear}
-                options={WEAR_PRESETS}
-                onPick={(next) => {
-                  setWear(next);
-                  setDeckWear(next);
-                }}
-                onReset={resetDeckWear}
-              />
-              <Preset
-                label="Levels"
-                value={levels}
-                options={LEVEL_PRESETS}
-                onPick={(next) => {
-                  setLevels(next);
-                  setDeckLevels(next);
-                }}
-                onReset={resetDeckLevelMeters}
-              />
-              <Preset
-                label="Condition"
-                value={condition}
-                options={RECORD_CONDITIONS}
-                onPick={(next) => {
-                  setCondition(next);
-                  setDeckCondition(next);
-                }}
-              />
               <Row label="Hover">{hovered ?? "—"}</Row>
               <Row label="Pressed">{pressed ?? "—"}</Row>
             </Group>
