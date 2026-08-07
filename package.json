@@ -1,0 +1,37 @@
+{
+  "name": "vinyl-simulator",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Interactive 3D vinyl turntable that plays local audio through a virtual groove.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "typecheck": "tsc -b",
+    "lint": "oxlint",
+    "preview": "vite preview",
+    "check:physics": "tsc --ignoreConfig src/physics/platterMotor.ts src/physics/pitch.ts src/physics/tonearm.ts src/physics/groove.ts src/physics/platterMotor.check.ts --outDir node_modules/.tmp/check-physics --module commonjs --target es2022 && node node_modules/.tmp/check-physics/platterMotor.check.js",
+    "check:dsp": "tsc --ignoreConfig src/physics/platterMotor.ts src/physics/pitch.ts src/physics/groove.ts src/physics/tonearm.ts src/physics/wowFlutter.ts src/audio/engine/grooveBuffer.ts src/audio/engine/resampler.ts src/audio/engine/riaa.ts src/audio/engine/cartridge.ts src/audio/engine/stylus.ts src/audio/engine/discShape.ts src/audio/engine/surface.ts src/audio/engine/rumble.ts src/audio/engine/hum.ts src/audio/engine/stylusTip.ts src/audio/engine/recordCondition.ts src/audio/engine/cutting.ts src/audio/engine/cutLayout.ts src/audio/engine/deckEngine.ts src/audio/engine/deckEngine.check.ts --outDir node_modules/.tmp/check-dsp --module commonjs --target es2022 && node node_modules/.tmp/check-dsp/audio/engine/deckEngine.check.js"
+  },
+  "dependencies": {
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.6.1",
+    "music-metadata": "^11.14.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "three": "^0.185.1",
+    "zustand": "^5.0.14"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.2",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@types/three": "^0.185.1",
+    "@vitejs/plugin-react": "^6.0.3",
+    "oxlint": "^1.71.0",
+    "typescript": "~6.0.2",
+    "vite": "^8.1.1",
+    "vite-plugin-pwa": "^1.3.0"
+  }
+}

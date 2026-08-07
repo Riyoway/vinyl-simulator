@@ -1,0 +1,251 @@
+:root {
+  color-scheme: dark;
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  color: #f5f5f5;
+  background: #111111;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-width: 320px;
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  overflow: hidden;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+.app {
+  width: 100%;
+  height: 100%;
+}
+
+.info {
+  position: fixed;
+  top: 0.75rem;
+  right: 0.75rem;
+  display: grid;
+  justify-items: end;
+  gap: 0.4rem;
+  max-width: min(19rem, calc(100vw - 1.5rem));
+  /* 箱そのものは素通し。**閉じているときに OrbitControls のドラッグを
+     右上一帯で飲み込まないため**で、受けるのはボタンとパネルだけ。 */
+  pointer-events: none;
+}
+
+.info__toggle,
+.info__panel {
+  pointer-events: auto;
+}
+
+.info__toggle {
+  padding: 0.25rem 0.7rem;
+  border: 1px solid #ffffff24;
+  border-radius: 0.3rem;
+  background: #0009;
+  color: #cfd4dc;
+  font-size: 0.72rem;
+  cursor: pointer;
+}
+
+.info__toggle:hover {
+  background: #1a1e28;
+}
+
+.info__panel {
+  display: grid;
+  gap: 0.55rem;
+  width: 100%;
+  max-height: min(70vh, 34rem);
+  padding: 0.6rem 0.7rem;
+  overflow-y: auto;
+  border: 1px solid #ffffff14;
+  border-radius: 0.5rem;
+  background: #0009;
+  font-size: 0.72rem;
+}
+
+.info-group h2 {
+  margin: 0 0 0.2rem;
+  color: #8fa8ff;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.info-group dl {
+  display: grid;
+  /* 値の桁が増えても幅が動かないよう、ラベル列を固定して右揃えにする。 */
+  grid-template-columns: 5.5rem minmax(0, 1fr);
+  gap: 0.1rem 0.5rem;
+  margin: 0;
+}
+
+.info-group dt {
+  color: #7f8794;
+}
+
+.info-group dd {
+  display: flex;
+  gap: 0.3rem;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 0;
+  overflow: hidden;
+  font-family: ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.info-group select {
+  min-width: 0;
+  border: 1px solid #ffffff24;
+  border-radius: 0.25rem;
+  background: #1a1e28;
+  color: inherit;
+  font: inherit;
+}
+
+.info-group button {
+  border: 1px solid #ffffff24;
+  border-radius: 0.25rem;
+  background: #2b3040;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.track-panel {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  display: grid;
+  gap: 0.5rem;
+  max-width: 20rem;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid #ffffff14;
+  border-radius: 0.5rem;
+  background: #0009;
+  font-size: 0.78rem;
+}
+
+.track-panel--dropping {
+  border-color: #8fa8ff;
+  background: #1a2035e6;
+}
+
+.track-panel__pick {
+  justify-self: start;
+  padding: 0.35rem 0.8rem;
+  border-radius: 0.3rem;
+  background: #2b3040;
+  cursor: pointer;
+}
+
+.track-panel__pick:hover {
+  background: #3a4052;
+}
+
+.track-panel__pick:focus-within {
+  outline: 2px solid #8fa8ff;
+  outline-offset: 2px;
+}
+
+.track-panel__tags {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.track-panel__cover {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 0.25rem;
+  object-fit: cover;
+  background: #00000040;
+}
+
+.track-panel__titles {
+  display: grid;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.track-panel__titles > * {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.track-panel__titles span {
+  color: #a9b0bd;
+  font-size: 0.72rem;
+}
+
+.track-panel__hint {
+  margin: 0;
+  color: #7f8794;
+}
+
+.track-panel__info {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.15rem 0.6rem;
+  margin: 0;
+  font-family: ui-monospace, monospace;
+  font-size: 0.72rem;
+}
+
+.track-panel__info dt {
+  color: #7f8794;
+}
+
+.track-panel__info dd {
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.track-panel__error {
+  margin: 0;
+  color: #ff9d9d;
+}
+
+.scene-error {
+  display: grid;
+  place-content: center;
+  height: 100%;
+  margin: 0;
+  padding: 2rem;
+  color: #ff9d9d;
+  font-family: ui-monospace, monospace;
+  text-align: center;
+  text-wrap: balance;
+}

@@ -1,0 +1,31 @@
+{
+  "model": "/models/turntable.glb",
+  "root": "ROOT_TURNTABLE",
+  "nodes": {
+    "platter": "PIVOT_PLATTER",
+    "tonearmYaw": "PIVOT_TONEARM_YAW",
+    "tonearmLift": "PIVOT_TONEARM_LIFT",
+    "tonearmMesh": "MESH_TONEARM",
+    "headshell": "MESH_HEADSHELL",
+    "stylus": "MESH_STYLUS",
+    "dustCover": "PIVOT_DUST_COVER",
+    "recordSocket": "SOCKET_RECORD",
+    "recordRoot": "RECORD_ROOT",
+    "recordMesh": "MESH_RECORD_DISC",
+    "recordLabelTop": "MESH_RECORD_LABEL_TOP",
+    "pitch": "PIVOT_PITCH",
+    "knobLeft": "PIVOT_KNOB_LEFT",
+    "knobRight": "PIVOT_KNOB_RIGHT",
+    "speedButton": "CTRL_POWER_BUTTON",
+    "startStopButton": "CTRL_START_STOP_BUTTON",
+    "counterweight": "CTRL_COUNTERWEIGHT"
+  },
+  "colliders": {
+    "record": "HIT_RECORD",
+    "pitch": "HIT_PITCH",
+    "knobLeft": "HIT_KNOB_LEFT",
+    "knobRight": "HIT_KNOB_RIGHT",
+    "speed": "HIT_POWER",
+    "startStop": "HIT_START_STOP"
+  }
+}
