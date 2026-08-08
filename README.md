@@ -7,12 +7,15 @@ stay synchronized.
 
 Live site: **[legacy.vinyl.riyo.me](https://legacy.vinyl.riyo.me/)**
 
-> **This repository is the frozen Legacy release.**
-> `v1.0.0` is the final release of this implementation line. The history was
-> collapsed into a single root commit, and the tree is preserved as it shipped.
-> No further development happens here — the code is kept as a working reference,
-> not as an active project. Fixes and features go to the successor, not to this
-> repository.
+> **This repository is the Legacy release line.**
+> `v1.0.0` is the final feature release of this implementation line, and its
+> history was collapsed into a single root commit. The code is kept as a working
+> reference rather than an active project: new features go to the successor, and
+> this repository stays maintenance only — fixes and corrections to what already
+> shipped.
+>
+> `main` may therefore sit ahead of the `v1.0.0` tag. The tag is the release; use
+> it if you want the tree exactly as it shipped.
 
 ## Features
 
@@ -27,7 +30,8 @@ Live site: **[legacy.vinyl.riyo.me](https://legacy.vinyl.riyo.me/)**
 - Deterministic platter, groove, stylus, cartridge, surface, eccentricity,
   tonearm, motor wow/flutter, structure-borne rumble, mains hum, and stylus
   tracing models
-- Record condition presets, wear, and manufacturing defect models
+- Record condition presets, wear, and manufacturing defect models, selectable
+  from the info panel as cut, pressing, wear, output level, and condition
 - PWA install support with offline caching of the application and turntable
   model
 - Favicon, install icons, and Open Graph/social preview artwork
