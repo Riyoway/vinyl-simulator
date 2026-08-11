@@ -1,6 +1,7 @@
 import { use, useEffect, useMemo } from "react";
 import { useGLTF } from "@react-three/drei";
-import type { Group, Mesh } from "three";
+import { useThree } from "@react-three/fiber";
+import type { Group, Mesh, MeshStandardMaterial } from "three";
 import { clone } from "three/examples/jsm/utils/SkeletonUtils.js";
 import {
   COLLIDER_LAYER,
@@ -17,6 +18,7 @@ export function Turntable({
   const manifest = use(loadManifest());
   const gltf = useGLTF(manifest.model);
   const scene = useMemo(() => clone(gltf.scene) as Group, [gltf.scene]);
+  const maxAnisotropy = useThree((s) => s.gl.capabilities.getMaxAnisotropy());
 
   // Throws naming any node the manifest promises but the GLB lacks.
   const parts = useMemo(
@@ -38,13 +40,32 @@ export function Turntable({
     }
 
     scene.traverse((object) => {
-      if (!(object as Mesh).isMesh || colliders.has(object as Mesh)) return;
-      object.castShadow = true;
-      object.receiveShadow = true;
+      const mesh = object as Mesh;
+      if (!mesh.isMesh || colliders.has(mesh)) return;
+      mesh.castShadow = true;
+      mesh.receiveShadow = true;
+
+      // The deck's lettering — Technics, 33, 45, Start/Stop and the pitch
+      // scale — is baked into a 2048² base-colour map, so it is read at
+      // whatever angle the deck is being looked at. The default anisotropy of
+      // 1 picks a blurred mip once the surface tilts away and the small type
+      // smears; this asks the GPU to sample it properly instead. Sampler
+      // state only, shared with the asset's own textures on purpose — nothing
+      // about how a material looks head-on changes (rdd.md 5.6 / 5.9).
+      const materials = Array.isArray(mesh.material)
+        ? mesh.material
+        : [mesh.material];
+      for (const material of materials) {
+        const map = (material as MeshStandardMaterial).map;
+        if (map && map.anisotropy < maxAnisotropy) {
+          map.anisotropy = maxAnisotropy;
+          map.needsUpdate = true;
+        }
+      }
     });
 
     onReady?.(parts);
-  }, [scene, parts, onReady]);
+  }, [scene, parts, onReady, maxAnisotropy]);
 
   return <primitive object={scene} position={[0, 0, 0]} scale={1} />;
 }

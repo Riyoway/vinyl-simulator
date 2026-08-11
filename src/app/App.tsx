@@ -3,10 +3,11 @@ import { Canvas } from "@react-three/fiber";
 import {
   ContactShadows,
   Environment,
+  GradientTexture,
   Lightformer,
   OrbitControls,
 } from "@react-three/drei";
-import type { RectAreaLight } from "three";
+import { BackSide, type RectAreaLight } from "three";
 import { RectAreaLightUniformsLib } from "three/examples/jsm/lights/RectAreaLightUniformsLib.js";
 import { TurntableScene } from "../components/deck/TurntableScene";
 import { COLLIDER_LAYER } from "../model/manifest";
@@ -99,10 +100,41 @@ export default function App() {
         <Suspense fallback={null}>
           <TurntableScene />
 
-          {/* Low, soft IBL so the metal (silver plate, knobs, cover) has
-              something to reflect and doesn't read as flat black. Broad
-              Lightformers = no thin reflection strips. */}
-          <Environment resolution={128} environmentIntensity={0.18}>
+          {/* IBL, and on this asset it is not a garnish — it is what makes the
+              deck visible at all.
+
+              The body is one material (`lambert1`) whose metallic-roughness map
+              reads metalness 1 at roughness ~0: a mirror. A mirror has no
+              diffuse term, so ambientLight and the RectAreaLights below do
+              almost nothing for it; it shows only what surrounds it. The deck
+              is the only object in the scene, so every direction that isn't
+              covered here reflects the bare background and the silver control
+              plate renders black — taking the dark baked lettering
+              (Technics / 33 / 45 / SPEED CONTROL / the pitch scale) down with
+              it, because that text is dark-on-light and needs the plate bright
+              to have any contrast.
+
+              So the environment is a closed room, not a few panels: the sphere
+              guarantees no reflection direction is ever black, which is what
+              makes the text hold up at *every* camera angle rather than only
+              where a Lightformer happens to land. The Lightformers stay on top
+              of it for the sculpted highlights. `resolution` is up from 128
+              because a near-mirror shows the cubemap's own pixels. */}
+          <Environment resolution={256} environmentIntensity={0.55}>
+            <mesh scale={100}>
+              <sphereGeometry args={[1, 32, 24]} />
+              {/* BackSide: seen from the inside. stops[0] lands on the sphere's
+                  top, so the list runs ceiling → horizon → floor. The floor is
+                  dark grey rather than black on purpose — a black floor puts
+                  the blackout back for anything facing down. */}
+              <meshBasicMaterial side={BackSide} toneMapped={false}>
+                <GradientTexture
+                  attach="map"
+                  stops={[0, 0.42, 0.62, 1]}
+                  colors={["#fdf6ec", "#dfe6f2", "#8d96a6", "#4a5158"]}
+                />
+              </meshBasicMaterial>
+            </mesh>
             <Lightformer
               form="rect"
               intensity={1.0}
